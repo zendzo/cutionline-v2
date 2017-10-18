@@ -55,8 +55,8 @@
         <h5><b>KANTOR CABANG {{ isset( $data->user->profile->kcp) ? strtoupper($data->user->profile->kcp) : " " }}</b></h5>
         <br>
         <br>
-        <h5><u><b>NAMA PIMPINAN</b></u></h5>
-        <h5><b>JABATAN</b></h5>     
+        <h5><u><b>{{ env('PIMPINAN') }}</b></u></h5>
+        <h5><b>PIMPINAN</b></h5>     
 
         </div>
         <!-- /.col -->

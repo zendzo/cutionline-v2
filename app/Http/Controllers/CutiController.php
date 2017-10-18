@@ -86,35 +86,35 @@ class CutiController extends Controller
 
         if (empty($cuti) or empty($cutiRunning)) {
 
-            if ($input['cuti_type_id'] === 1 && $selama >= 12) {
+            if ($input['cuti_type_id'] === 1 or $selama >= 12) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === 2 && $selama >= 90 ) {
+            if ($input['cuti_type_id'] === 2 or $selama >= 90 ) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');
             }
 
-            if ($input['cuti_type_id'] === 3 && $selama >= 14 ) {
+            if ($input['cuti_type_id'] === 3 or $selama >= 14 ) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');
             }
 
-            if ($input['cuti_type_id'] === 4 && $selama >= 40 ) {
+            if ($input['cuti_type_id'] === 4 or $selama >= 40 ) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');
             }
 
-            if ($input['cuti_type_id'] === 5 && $selama >= 22 ) {
+            if ($input['cuti_type_id'] === 5 or $selama >= 22 ) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
@@ -169,7 +169,12 @@ class CutiController extends Controller
             return view('cuti.show_ditolak',compact(['page_title','data']));
         }
 
-        return view('cuti.show',compact(['page_title','data']));
+        if(is_null($data->catatan_umc))
+        {
+            return view('cuti.show_umc',compact(['page_title','data']));
+        }else{
+            return view('cuti.show',compact(['page_title','data']));
+        }
     }
 
     /**
@@ -292,19 +297,5 @@ class CutiController extends Controller
         $data = Cuti::where('cuti_status_id',2)->paginate('15');
 
         return view('cuti.cuti_berjalan',compact(['page_title','data']));
-    }
-
-    public function cutiDitolak()
-    {
-        $page_title = "Daftar Cuti Ditolak";
-
-        $data = Cuti::where('cuti_status_id',3)->paginate('15');
-
-        return view('cuti.cuti_ditolak',compact(['page_title','data']));
-    }
-
-    public function cekCuti($cuti_type_id, $user_id)
-    {
-        
     }
 }

@@ -8,6 +8,5 @@
     <li><a href="{{ route('admin.cuti.index') }}"><i class="fa fa-table"></i>Laporan Cuti</a></li>
     <li><a href="{{ route('admin.cuti.proses') }}"><i class="fa fa-table"></i>Laporan Proses</a></li>
     <li><a href="{{ route('admin.cuti.berjalan') }}"><i class="fa fa-table"></i>Laporan Berjalan</a></li>
-    <li><a href="{{ route('admin.cuti.ditolak') }}"><i class="fa fa-table"></i>Laporan Ditolak</a></li>
   </ul>
 </li>

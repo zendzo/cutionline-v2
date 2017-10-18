@@ -67,8 +67,8 @@
         <h5><b>KANTOR CABANG {{ isset( $data->user->profile->kcp) ? strtoupper($data->user->profile->kcp) : " " }}</b></h5>
         <br>
         <br>
-        <h5><u><b>NAMA PIMPINAN</b></u></h5>
-        <h5><b>JABATAN</b></h5>     
+        <h5><u><b>{{ env('PIMPINAN') }}</b></u></h5>
+        <h5><b>PIMPINAN</b></h5>     
 
         </div>
         <!-- /.col -->
@@ -80,10 +80,12 @@
           <div class="col-xs-12">
             <button onclick="printPage()" href="#" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
             @if($data->cuti_status_id == 1)
-            <a href="{{ url('/admin/cuti/reject', $data->id ) }}" class="btn btn-warning pull-right" style="margin-right: 5px;"><i class="fa fa-ban"></i> Tolak Permohonan
-            </a>
-            <a href="{{ url('/admin/cuti/approve', $data->id ) }}" class="btn btn-success pull-right" style="margin-right: 5px;"><i class="fa fa-check"></i> Terima Permohonan
-            </a>
+              @if(!is_null($data->catatan_umc))
+                <a href="{{ url('/admin/cuti/reject', $data->id ) }}" class="btn btn-warning pull-right" style="margin-right: 5px;"><i class="fa fa-ban"></i> Tolak Permohonan
+                </a>
+                <a href="{{ url('/admin/cuti/approve', $data->id ) }}" class="btn btn-success pull-right" style="margin-right: 5px;"><i class="fa fa-check"></i> Terima Permohonan
+                </a>
+              @endif
             @endif
 
           </div>

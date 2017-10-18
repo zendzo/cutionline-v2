@@ -32,9 +32,21 @@
 
       @if(Auth::user()->role->id == 1)
         <td>
-          <a href="{{ url('/user/cuti',$cuti->id) }}"><span class="label label-success">{{ $cuti->cutiStatus->status }}</span></a>
+          
+          @if(!is_null($cuti->catatan_umc))
+            <a href="{{ url('/user/cuti',$cuti->id) }}">
+              <span class="label label-success">{{ $cuti->cutiStatus->status }}</span>
+            </a>
+          @endif
+
+          @if(is_null($cuti->catatan_umc))
+            <a href="{{ url('/user/cuti',$cuti->id) }}">
+                <span class="label label-success">Cetak Form UMC</span>
+            </a>
+          @endif
+
           @if($cuti->cuti_status_id === 1)
-            <a href="{{ route('admin.cuti.edit',$cuti->id) }}"><span class="label label-success">Edit</span></a>
+            <a href="{{ route('admin.cuti.edit',$cuti->id) }}"><span class="label label-success">Catan UMC</span></a>
           @endif
         </td>
       @else

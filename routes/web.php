@@ -26,6 +26,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'admin'], function(
 
 	Route::get('/cuti/berjalan',['as' => 'cuti.berjalan','uses' => 'CutiController@cutiBerjalan']);
 
+	Route::get('/cuti/showFormUmc/{id}',['' => 'cuti.show.umc','uses' => 'CutiController@showFormUmc']);
+
 });
 
 Auth::routes();
