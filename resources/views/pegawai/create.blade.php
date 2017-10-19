@@ -38,7 +38,7 @@
                 <label for="first_name" class="col-sm-2 control-label">Nama Depan</label>
 
                 <div class="col-sm-10">
-                  <input id="first_name" name="first_name" type="text" class="form-control" placeholder="first name" value="{{ old('first_name') }}">
+                  <input required id="first_name" name="first_name" type="text" class="form-control" placeholder="first name" value="{{ old('first_name') }}">
 
                   @if ($errors->has('first_name'))
                       <span class="help-block">
@@ -52,7 +52,7 @@
                 <label for="last_name" class="col-sm-2 control-label">Nama Belakang</label>
 
                 <div class="col-sm-10">
-                 <input id="last_name" name="last_name" type="text" class="form-control" placeholder="last name" value="{{ old('last_name') }}">
+                 <input required id="last_name" name="last_name" type="text" class="form-control" placeholder="last name" value="{{ old('last_name') }}">
 
                   @if ($errors->has('last_name'))
                       <span class="help-block">
@@ -84,7 +84,7 @@
                 <label for="NPP" class="col-sm-2 control-label">NPP</label>
 
                 <div class="col-sm-10">
-                 <input id="NPP" name="NPP" type="text" class="form-control" placeholder="NPP" value="{{ old('NPP') }}">
+                 <input required id="NPP" name="NPP" type="text" class="form-control" placeholder="NPP" value="{{ old('NPP') }}">
 
                   @if ($errors->has('NPP'))
                       <span class="help-block">
@@ -98,7 +98,7 @@
                 <label for="join_year" class="col-sm-2 control-label">Tahun</label>
 
                 <div class="col-sm-10">
-                 <input id="datepicker" name="join_year" type="text" class="form-control" placeholder="mm/dd/yyyy" value="{{ old('join_year') }}">
+                 <input required id="datepicker" name="join_year" type="text" class="form-control" placeholder="mm/dd/yyyy" value="{{ old('join_year') }}">
 
                   @if ($errors->has('join_year'))
                       <span class="help-block">
@@ -112,7 +112,7 @@
                 <label for="email" class="col-sm-2 control-label">Email</label>
 
                 <div class="col-sm-10">
-                 <input id="email" name="email" type="text" class="form-control" placeholder="email" value="{{ old('email') }}">
+                 <input required id="email" name="email" type="text" class="form-control" placeholder="email" value="{{ old('email') }}">
 
                   @if ($errors->has('email'))
                       <span class="help-block">
@@ -126,7 +126,7 @@
                 <label for="phone" class="col-sm-2 control-label">Phone</label>
 
                 <div class="col-sm-10">
-                 <input id="phone" name="phone" type="text" class="form-control" placeholder="phone" value="{{ old('phone') }}">
+                 <input required id="phone" name="phone" type="text" class="form-control" placeholder="phone" value="{{ old('phone') }}">
 
                   @if ($errors->has('phone'))
                       <span class="help-block">
@@ -140,7 +140,7 @@
                 <label for="password" class="col-sm-2 control-label">password</label>
 
                 <div class="col-sm-10">
-                 <input id="password" name="password" type="password" class="form-control" placeholder="password">
+                 <input required id="password" name="password" type="password" class="form-control" placeholder="password">
 
                   @if ($errors->has('password'))
                       <span class="help-block">
@@ -154,7 +154,7 @@
                 <label for="password-confirmation" class="col-sm-2 control-label">password</label>
 
                 <div class="col-sm-10">
-                 <input id="password-confirmation" name="password_confirmation" type="password" class="form-control" placeholder="Retype password">
+                 <input required id="password-confirmation" name="password_confirmation" type="password" class="form-control" placeholder="Retype password">
 
                 </div>
               </div>
