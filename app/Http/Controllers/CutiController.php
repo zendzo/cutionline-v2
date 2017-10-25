@@ -254,7 +254,7 @@ class CutiController extends Controller
 
             // kirim email pemberitahuan disetejui
 
-            $data->user->notify(new CutiApproveMailNotification($data));
+            // $data->user->notify(new CutiApproveMailNotification($data));
         }
 
             // redirect back
@@ -281,7 +281,7 @@ class CutiController extends Controller
 
             // kirim email pemberitahuan disetejui
 
-            $data->user->notify(new CutiRejectMailNotification($data));
+            // $data->user->notify(new CutiRejectMailNotification($data));
         }
 
             // redirect back
