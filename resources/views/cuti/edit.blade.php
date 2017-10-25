@@ -108,7 +108,7 @@
                   <textarea name="rekomendasi_2" class="form-control" rows="3" >{{ $cuti->rekomendasi_2 }}</textarea>
                 </div>
                 <div class="form-group">
-                   <input type="text" name="user_id" hidden value="{{ Auth::id() }}">
+                   <input type="text" name="user_id" hidden value="{{ $cuti->user->id }}">
                 </div>
               </div>
               <!-- /.box-body -->
