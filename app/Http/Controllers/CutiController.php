@@ -84,37 +84,43 @@ class CutiController extends Controller
 
         $cutiRunning = Cuti::whereBetween('berakhir',[Carbon::now(),Carbon::now()->addMonths(2)])->get();
 
+        $masa_kerja = Auth::user()->masaKerja();
+
+        $cuti_hamil = Carbon::now()->diffInDays(Carbon::now()->addMonths(3));
+
         if (empty($cuti) or empty($cutiRunning)) {
 
-            if ($input['cuti_type_id'] === 1 or $selama >= 12) {
+            // cuti tahunan as per masa kerja
+
+            if ($input['cuti_type_id'] === "1" && $selama >= 12 && $masa_kerja >= 5) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === 2 or $selama >= 90 ) {
+            if ($input['cuti_type_id'] === "1" && $selama >= 15 && $masa_kerja >= 10) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
+                ->with('status','error')
+                ->with('type','error');                            
+            }
+
+            if ($input['cuti_type_id'] === "1" && $selama >= 18 && $masa_kerja >= 10) {
+                return redirect()->back()
+                ->with('message', 'Cuti Melebihi Batas Hari!')
+                ->with('status','error')
+                ->with('type','error');                            
+            }
+
+            if ($input['cuti_type_id'] === "2" && $selama >= $cuti_hamil && $selama <= $cuti_hamil ) {
+                return redirect()->back()
+                ->with('message', 'Cuti Tidak Memenuhi Syarat!')
                 ->with('status','error')
                 ->with('type','error');
             }
 
-            if ($input['cuti_type_id'] === 3 or $selama >= 14 ) {
-                return redirect()->back()
-                ->with('message', 'Cuti Melebihi Batas Hari!')
-                ->with('status','error')
-                ->with('type','error');
-            }
-
-            if ($input['cuti_type_id'] === 4 or $selama >= 40 ) {
-                return redirect()->back()
-                ->with('message', 'Cuti Melebihi Batas Hari!')
-                ->with('status','error')
-                ->with('type','error');
-            }
-
-            if ($input['cuti_type_id'] === 5 or $selama >= 22 ) {
+            if ($input['cuti_type_id'] === "3" or $selama >= 3 ) {
                 return redirect()->back()
                 ->with('message', 'Cuti Melebihi Batas Hari!')
                 ->with('status','error')
@@ -124,8 +130,17 @@ class CutiController extends Controller
             $cuti = new Cuti;
 
             $cuti->cuti_type_id = $input['cuti_type_id'];
-            $cuti->mulai = $start;
-            $cuti->berakhir = $end;
+
+            // exclide the weekdays
+            if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "3") {
+
+                $cuti->mulai = $start;
+                $cuti->berakhir = $start->addWeekDays($selama);
+
+            }else{
+                $cuti->mulai = $start;
+                $cuti->berakhir = $end;
+            }
             $cuti->masa_tahun = $input['masa_tahun'];
             $cuti->keperluan = $input['keperluan'];
             $cuti->alamat = $input['alamat'];

@@ -14,7 +14,7 @@ class CutiTypesTableSedder extends Seeder
     public function run()
     {
 
-        $Type = ['Tahunan','Melahirakan','Umroh','Haji','Lustrum'];
+        $Type = ['Tahunan','Melahirakan','Umroh - Haji','Nikah'];
 
         foreach ($Type as $item) {
 

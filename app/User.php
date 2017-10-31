@@ -81,7 +81,11 @@ class User extends Authenticatable
 
     public function masaKerja()
     {
-        return $this->join_year->diffInDays(Carbon::now()) / 360;
+        $now = Carbon::now();
+
+        $masa_kerja = Carbon::createFromFormat('Y-m-d',$this->attributes['join_year']);
+
+        return $now->diffInYears($masa_kerja);
     }
 
     public function jatahCuti()

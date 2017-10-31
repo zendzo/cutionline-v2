@@ -17,7 +17,7 @@
 @section('content')
 <div class="register-box">
   <div class="register-logo">
-    <a href="/"><b>CUTI</b>Online</a>
+    <a href="/"><img src="{{ asset("AdminLTE/dist/img/BNI.png") }}" width="250px"></a>
   </div>
 
   <div class="register-box-body">

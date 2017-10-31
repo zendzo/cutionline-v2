@@ -82,6 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
+                    <img src="{{ asset("AdminLTE/dist/img/BNI.png") }}" width="250px">
                     <b>CUTI</b>Online
                 </div>
 

@@ -1,7 +1,7 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="/" class="logo"><b>Cuti</b>Online</a>
+            <a href="/" class="logo"><img src="{{ asset("AdminLTE/dist/img/BNI.png") }}" width="100px"></a>
 
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -15,7 +15,7 @@
                         <!-- Messages: style can be found in dropdown.less-->
 
                         @if(Auth::user()->role_id === 1 )
-                            @include('layouts.partials.notification_menu')
+                        
                         @endif
 
                         @include('layouts.partials.user_account_menu')

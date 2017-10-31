@@ -17,8 +17,12 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         // redirect to user page if user is not administrator
-        if (Auth::user()->role_id !== 1 ) {
-            return redirect('/home');
+        if (Auth::check()) {
+            if (Auth::user()->role_id !== 1 ) {
+                return redirect('/home');
+            }
+        }else{
+            return redirect('/login');
         }
         return $next($request);
     }

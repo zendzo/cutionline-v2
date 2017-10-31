@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-box">
   <div class="login-logo">
-    <a href="/"><b>CUTI</b>Online</a>
+    <a href="/"><img src="{{ asset("AdminLTE/dist/img/BNI.png") }}" width="250px"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
