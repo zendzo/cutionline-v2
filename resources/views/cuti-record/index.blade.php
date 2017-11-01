@@ -32,24 +32,18 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Cuti Type</th>
-                    <th>Masa Berlaku</th>
-                    <th>Masa Berakhir</th>
-                    <th>Terpakai</th>
-                    <th>Sisa</th>
-                    <th>Total</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Masa Kerja (tahun)</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                    @forelse ($cuti_records as $cuti)
+                    @forelse ($users as $user)
                         <tr>
-                            <td>{{ $cuti->cutiType->type }}</td>
-                            <td>{{ $cuti->masa_berlaku }}</td>
-                            <td>{{ $cuti->masa_berakhir }}</td>
-                            <td>{{ $cuti->terpakai }}</td>
-                            <td>{{ $cuti->sisa }}</td>
-                            <td>{{ $cuti->total }}</td>
+                            <td><a href="{{ route('admin.claim.show',$user->id) }}">{{ $user->fullName() }}</a></td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->masaKerja() }}</td>
                         </tr>
                     @empty
                         <tr>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Alert;
 use App\Cuti;
+use App\CutiRecord;
 
 class HomeController extends Controller
 {
@@ -31,42 +32,11 @@ class HomeController extends Controller
             return redirect('/admin');
         }
 
-        $masa_kerja = Auth::user()->masaKerja();
+        $page_title = "Data Cuti ".Auth::user()->fullName();
 
-        if ($masa_kerja >= 1 or $masa_kerja <= 5) {
-            $tahunan_max = 12;
-        }
+        $cuti_records = CutiRecord::where('user_id',Auth::id())->get();
 
-        if ($masa_kerja >= 5 or $masa_kerja <= 10) {
-            $tahunan_max = 15;
-        }
-
-        if ($masa_kerja >= 10) {
-            $tahunan_max = 18;
-        }
-
-        $melahirkan_max = 90;
-        $haji_max = 40;
-        $nikah_max = 3;
-
-        $tahunan = Cuti::where('user_id',Auth::id())->where('cuti_type_id',1)->get();
-
-        $melahirkan = Cuti::where('user_id',Auth::id())->where('cuti_type_id',2)->get();
-
-        $haji = Cuti::where('user_id',Auth::id())->where('cuti_type_id',3)->get();
-
-        $nikah = Cuti::where('user_id',Auth::id())->where('cuti_type_id',4)->get();
-
-        return view('/home',compact([
-            'tahunan_max',
-            'melahirkan_max',
-            'haji_max',
-            'nikah_max',
-            'tahunan',
-            'melahirkan',
-            'haji',
-            'nikah'
-        ]))
+        return view('/home',compact(['cuti_records','page_title']))
         ->with('message', 'Selamat Datang Kembali!')
         ->with('status','success')
         ->with('type','success');

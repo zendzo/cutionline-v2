@@ -88,8 +88,8 @@ class User extends Authenticatable
         return $now->diffInYears($masa_kerja);
     }
 
-    public function jatahCuti()
+    public function cutiRecords()
     {
-        
+        return $this->hasMany('App\CutiRecord');
     }
 }

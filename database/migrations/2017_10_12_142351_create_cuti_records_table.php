@@ -17,9 +17,10 @@ class CreateCutiRecordsTable extends Migration
             $table->increments('id');
             $table->integer('cuti_type_id');
             $table->integer('user_id');
-            $table->integer('cuti_id');
             $table->date('masa_berlaku');
             $table->date('masa_berakhir');
+            $table->integer('sisa')->default(0)->nullable();
+            $table->integer('terpakai')->default(0)->nullable();
             $table->integer('total');
             $table->timestamps();
         });

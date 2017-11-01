@@ -166,6 +166,8 @@ class CutiController extends Controller
 
             $cuti = new Cuti;
 
+            $cutiRecord = CutiRecord::where('user_id',Auth::id())->where('cuti_type_id',$input['cuti_type_id']);
+
             $cuti->cuti_type_id = $input['cuti_type_id'];
             $cuti->mulai = $start;
             $cuti->berakhir = $end;
@@ -181,6 +183,11 @@ class CutiController extends Controller
                 $cuti->total = $cuti_tahunan;
             }
             $cuti->total = $selama;
+
+            // Cuti Record increment decrease
+            $cutiRecord->increment('terpakai',$selama);
+            $cutiRecord->decrement('total',$selama);
+
             $cuti->save();
 
             return redirect()->route('user.cuti.status')

@@ -28,6 +28,16 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'admin'], function(
 
 	Route::get('/cuti/showFormUmc/{id}',['' => 'cuti.show.umc','uses' => 'CutiController@showFormUmc']);
 
+	Route::get('/claim/report',[
+		'as'=>'claim.report',
+		'uses'=>'CutiRecordController@claimReport'
+	]);
+
+	Route::get('/claim/show/{id}',[
+		'as' => 'claim.show',
+		'uses'	=> 'CutiRecordController@showUserRecord'
+	]);
+
 });
 
 Auth::routes();
@@ -43,5 +53,10 @@ Route::group(['prefix' => 'user','as' => 'user.','middleware' => 'auth'],functio
 	Route::resource('about','UserAboutController');
 
 	Route::resource('cuti','CutiController');
+
+	Route::get('/claim/cuti',[
+		'as'	=>	'claim.cuti',
+		'uses'	=>	'CutiRecordController@claim'
+	]);
 
 });

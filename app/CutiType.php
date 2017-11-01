@@ -14,4 +14,9 @@ class CutiType extends Model
     {
     	return $this->hasOne(Cuti::class);
     }
+
+    public function cutiRecords()
+    {
+    	return $this->hasMany('App\cutiRecord');
+    }
 }

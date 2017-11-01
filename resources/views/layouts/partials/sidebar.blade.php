@@ -43,6 +43,7 @@
       @if(Auth::user()->role_id != 1)
         <!-- user menu -->
         @include('layouts.menus.menu_cuti')
+        @include('layouts.menus.menu_claim_cuti')
       @endif
     </ul><!-- /.sidebar-menu -->
   </section>
