@@ -77,14 +77,9 @@ class CutiController extends Controller
 
         $end = Carbon::createFromFormat('m/d/Y', substr($input['rangeTanggal'], 13, 10));
 
-        $selama = $start->diffInDays($end);
+        $startDate = $start->copy()->subDay();
 
-        if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "4") {
-
-            $selama_without_weekDays = $start->diffInDays($start->copy()->addWeekDays($selama));
-        }
-
-        $selama = $start->diffInDays($end);
+        $selama = $startDate->diffInDays($end);
 
         $cuti = Cuti::where('cuti_type_id', $input['cuti_type_id'])
                         ->where('user_id', Auth::id())
@@ -95,9 +90,11 @@ class CutiController extends Controller
 
         $masa_kerja = Auth::user()->masaKerja();
 
-        $cuti_hamil = Carbon::now()->diffInDays(Carbon::now()->addMonths(3));
+        $cuti_hamil = $start->copy()->diffInDays($start->copy()->addMonths(3));
 
-        $cuti_nikah = Carbon::now()->diffInDays(Carbon::now()->addWeekDays(3));
+        $cuti_nikah = $start->copy()->diffInDays($start->copy()->addWeekDays(3));
+
+        $cuti_tahunan = $start->copy()->diffInDays($startDate->copy()->addWeekDays($selama));
 
         if (empty($cuti) or empty($cutiRunning)) {
 
@@ -124,25 +121,47 @@ class CutiController extends Controller
                 ->with('type','error');                            
             }
             // cuti hamil max 3 months start from day taken
-            if ($input['cuti_type_id'] === "2" && $selama >= $cuti_hamil && $selama <= $cuti_hamil ) {
-                return redirect()->back()
-                ->with('message', 'Cuti Melahirkan Tidak Memenuhi Syarat!')
-                ->with('status','error')
-                ->with('type','error');
+            if ($input['cuti_type_id'] === "2") {
+                if ($input['cuti_type_id'] === "2" && $selama > $cuti_hamil) {
+                    return redirect()->back()
+                            ->with('message', "Cuti Melahirkan Melebihi Batas Syarat $selama!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }elseif ($input['cuti_type_id'] === "2" && $selama < $cuti_hamil) {
+                    return redirect()->back()
+                            ->with('message', "Cuti Melahirkan Kurang Batas Syarat $selama!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }
             }
 
-            if ($input['cuti_type_id'] === "3" && $selama >= 40 or $selama <= 40) {
-                return redirect()->back()
-                ->with('message', 'Cuti Haji Tidak Memenuhi Syarat!!')
-                ->with('status','error')
-                ->with('type','error');
+            if ($input['cuti_type_id'] === "3") {
+                if ($input['cuti_type_id'] === "3" && $selama > 40) {
+                    return redirect()->back()
+                            ->with('message', "Cuti Haji Melebihi Batas Syarat .$selama!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }elseif ($input['cuti_type_id'] === "3" && $selama < 40) {
+                    return redirect()->back()
+                            ->with('message', "Cuti Haji Kurang Dari Batas Syarat $selama!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }
+                    
             }
 
-            if ($input['cuti_type_id'] === "4" && $selama >= $cuti_nikah && $selama <= $cuti_nikah) {
-                return redirect()->back()
-                ->with('message', 'Cuti Nikah Tidak Memenuhi Syarat!')
-                ->with('status','error')
-                ->with('type','error');
+            if ($input['cuti_type_id'] === "4") {
+                if ($selama > 3) {
+                    return redirect()->back()
+                            ->with('message', "Cuti Nikah Melebihi Syarat $selama!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }elseif ($selama < 3) {
+                    return redirect()->back()
+                            ->with('message',  "Cuti Nikah Kurang Dari Syarat $selama!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }
             }
 
             $cuti = new Cuti;
@@ -158,11 +177,10 @@ class CutiController extends Controller
             // $cuti->rekomendasi_1 = $input['rekomendasi_1'];
             // $cuti->rekomendasi_2 = $input['rekomendasi_2'];
             $cuti->user_id = Auth::id();
-            if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "4") {
-                $cuti->total = $selama_without_weekDays;
-            }else{
-                $cuti->total = $selama;
+            if ($input['cuti_type_id'] === "1") {
+                $cuti->total = $cuti_tahunan;
             }
+            $cuti->total = $selama;
             $cuti->save();
 
             return redirect()->route('user.cuti.status')
