@@ -16,7 +16,9 @@
 <script src="{{ asset('AdminLTE/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script>
 	$(function(){
-		$('#rangeTanggal').daterangepicker();
+		$('#rangeTanggal').daterangepicker({
+      startDate: {{ Date('d/m/Y') }}
+    });
 
     $('#datepicker').datepicker({
       minViewMode: 2,
