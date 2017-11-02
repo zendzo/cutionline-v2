@@ -94,7 +94,17 @@ class CutiController extends Controller
 
         $cuti_nikah = $start->copy()->diffInDays($start->copy()->addWeekDays(3));
 
-        $cuti_tahunan = $startDate->diffInDays($end);
+        $tanggal = $start->copy();
+
+        foreach (range(1,$selama) as $index) {
+            if ($tanggal->addDay()->isWeekend()) {
+                $tanggal->subDay();
+            }
+        }
+
+        $cuti_tahunan = $end->subDay()->diffInDays($tanggal);
+
+        $var = $selama - $cuti_tahunan;
 
         if (empty($cuti) or empty($cutiRunning)) {
 
@@ -179,10 +189,12 @@ class CutiController extends Controller
             // $cuti->rekomendasi_1 = $input['rekomendasi_1'];
             // $cuti->rekomendasi_2 = $input['rekomendasi_2'];
             $cuti->user_id = Auth::id();
-            if ($input['cuti_type_id'] === "1") {
-                $cuti->total = $cuti_tahunan;
+            if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "3") {
+                $cuti->total = $var;
+            }else{
+                $cuti->total = $selama;
             }
-            $cuti->total = $selama;
+            
 
             // Cuti Record increment decrease
             $cutiRecord->increment('terpakai',$selama);

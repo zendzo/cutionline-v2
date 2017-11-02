@@ -67,13 +67,14 @@ Route::get('/test',function ()
 
 	$end = Carbon\Carbon::createFromFormat('d-m-Y','13-11-2017');
 
-	$diff = $start->diffInDays($end);
+	$diff = $start->copy()->subDay()->diffInDays($end);
+
+	$tanggal = $start->copy();
 
 	foreach (range(1,$diff) as $index) {
-		$weekend = array();
-
-		array_push($weekend,$start->addDay($index));
+		if ($tanggal->addDay()->isWeekend()) {
+			$tanggal->subDay();
+		}
 	}
-
-	return $weekend;
+	$cuti_tahunan = $end->subDay()->diffInDays($tanggal);
 });
