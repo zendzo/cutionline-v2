@@ -94,7 +94,7 @@ class CutiController extends Controller
 
         $cuti_nikah = $start->copy()->diffInDays($start->copy()->addWeekDays(3));
 
-        $cuti_tahunan = $start->copy()->diffInDays($startDate->copy()->addWeekDays($selama));
+        $cuti_tahunan = $startDate->diffInDays($end);
 
         if (empty($cuti) or empty($cutiRunning)) {
 
@@ -107,14 +107,14 @@ class CutiController extends Controller
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === "1" && $selama >= 15 && $masa_kerja >= 10) {
+            if ($input['cuti_type_id'] === "1" && $selama >= 15 && $masa_kerja <= 10) {
                 return redirect()->back()
                 ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === "1" && $selama >= 18 && $masa_kerja >= 10) {
+            if ($input['cuti_type_id'] === "1" && $selama >= 18 && $masa_kerja <= 10) {
                 return redirect()->back()
                 ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
                 ->with('status','error')

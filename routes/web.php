@@ -60,3 +60,20 @@ Route::group(['prefix' => 'user','as' => 'user.','middleware' => 'auth'],functio
 	]);
 
 });
+
+Route::get('/test',function ()
+{
+	$start = Carbon\Carbon::createFromFormat('d-m-Y','06-11-2017');
+
+	$end = Carbon\Carbon::createFromFormat('d-m-Y','13-11-2017');
+
+	$diff = $start->diffInDays($end);
+
+	foreach (range(1,$diff) as $index) {
+		$weekend = array();
+
+		array_push($weekend,$start->addDay($index));
+	}
+
+	return $weekend;
+});
