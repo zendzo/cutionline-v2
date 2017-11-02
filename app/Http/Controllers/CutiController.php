@@ -186,7 +186,6 @@ class CutiController extends Controller
 
             // Cuti Record increment decrease
             $cutiRecord->increment('terpakai',$selama);
-            $cutiRecord->decrement('total',$selama);
 
             $cuti->save();
 
