@@ -157,12 +157,12 @@ class CutiController extends Controller
             if ($input['cuti_type_id'] === "4") {
                 if ($diffWithoutWeekend >= 3) {
                     return redirect()->back()
-                            ->with('message', "Cuti Nikah Melebihi Syarat, Anda Mengambil Selama $var Hari!")
+                            ->with('message', "Cuti Nikah Melebihi Syarat, Anda Mengambil Selama $diffWithoutWeekend Hari!")
                             ->with('status','error')
                             ->with('type','error');
                 }elseif ($diffWithoutWeekend <= 3) {
                     return redirect()->back()
-                            ->with('message',  "Cuti Nikah Kurang Dari Syarat, Anda Mengambil Selama $var Hari!")
+                            ->with('message',  "Cuti Nikah Kurang Dari Syarat, Anda Mengambil Selama $diffWithoutWeekend Hari!")
                             ->with('status','error')
                             ->with('type','error');
                 }
