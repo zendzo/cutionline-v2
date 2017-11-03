@@ -155,12 +155,12 @@ class CutiController extends Controller
             }
 
             if ($input['cuti_type_id'] === "4") {
-                if ($diffWithoutWeekend >= 3) {
+                if ($diffWithoutWeekend > 3) {
                     return redirect()->back()
                             ->with('message', "Cuti Nikah Melebihi Syarat, Anda Mengambil Selama $diffWithoutWeekend Hari!")
                             ->with('status','error')
                             ->with('type','error');
-                }elseif ($diffWithoutWeekend <= 3) {
+                }elseif ($diffWithoutWeekend < 3) {
                     return redirect()->back()
                             ->with('message',  "Cuti Nikah Kurang Dari Syarat, Anda Mengambil Selama $diffWithoutWeekend Hari!")
                             ->with('status','error')
@@ -183,7 +183,7 @@ class CutiController extends Controller
             // $cuti->rekomendasi_1 = $input['rekomendasi_1'];
             // $cuti->rekomendasi_2 = $input['rekomendasi_2'];
             $cuti->user_id = Auth::id();
-            if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "3") {
+            if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "4") {
 
                 $cuti->total = $diffWithoutWeekend;
                 $cutiRecord->increment('terpakai',$diffWithoutWeekend);
