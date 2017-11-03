@@ -96,35 +96,29 @@ class CutiController extends Controller
 
         $tanggal = $start->copy();
 
-        foreach (range(1,$selama) as $index) {
-            if ($tanggal->addDay()->isWeekend()) {
-                $tanggal->subDay();
-            }
-        }
-
-        $cuti_tahunan = $end->subDay()->diffInDays($tanggal);
-
-        $var = $selama - $cuti_tahunan;
+        $diffWithoutWeekend = $start->copy()->subDay()->diffInDaysFiltered(function(Carbon $date) {
+        return !$date->isWeekend();
+        }, $end);
 
         if (empty($cuti) or empty($cutiRunning)) {
 
             // cuti tahunan as per masa kerja
 
-            if ($input['cuti_type_id'] === "1" && $selama >= 12 && $masa_kerja >= 5) {
+            if ($input['cuti_type_id'] === "1" && $diffWithoutWeekend >= 12 && $masa_kerja >= 5) {
                 return redirect()->back()
                 ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === "1" && $selama >= 15 && $masa_kerja <= 10) {
+            if ($input['cuti_type_id'] === "1" && $diffWithoutWeekend >= 15 && $masa_kerja <= 10) {
                 return redirect()->back()
                 ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === "1" && $selama >= 18 && $masa_kerja <= 10) {
+            if ($input['cuti_type_id'] === "1" && $diffWithoutWeekend >= 18 && $masa_kerja <= 10) {
                 return redirect()->back()
                 ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
                 ->with('status','error')
@@ -161,14 +155,14 @@ class CutiController extends Controller
             }
 
             if ($input['cuti_type_id'] === "4") {
-                if ($selama > 3) {
+                if ($diffWithoutWeekend >= 3) {
                     return redirect()->back()
-                            ->with('message', "Cuti Nikah Melebihi Syarat $selama!")
+                            ->with('message', "Cuti Nikah Melebihi Syarat, Anda Mengambil Selama $var Hari!")
                             ->with('status','error')
                             ->with('type','error');
-                }elseif ($selama < 3) {
+                }elseif ($diffWithoutWeekend <= 3) {
                     return redirect()->back()
-                            ->with('message',  "Cuti Nikah Kurang Dari Syarat $selama!")
+                            ->with('message',  "Cuti Nikah Kurang Dari Syarat, Anda Mengambil Selama $var Hari!")
                             ->with('status','error')
                             ->with('type','error');
                 }
@@ -190,14 +184,17 @@ class CutiController extends Controller
             // $cuti->rekomendasi_2 = $input['rekomendasi_2'];
             $cuti->user_id = Auth::id();
             if ($input['cuti_type_id'] === "1" or $input['cuti_type_id'] === "3") {
-                $cuti->total = $var;
+
+                $cuti->total = $diffWithoutWeekend;
+                $cutiRecord->increment('terpakai',$diffWithoutWeekend);
+
             }else{
+
                 $cuti->total = $selama;
+                $cutiRecord->increment('terpakai',$selama);
+
             }
             
-
-            // Cuti Record increment decrease
-            $cutiRecord->increment('terpakai',$selama);
 
             $cuti->save();
 

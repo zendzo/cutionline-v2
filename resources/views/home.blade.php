@@ -37,7 +37,7 @@
                     <th>Masa Berakhir</th>
                     <th>Terpakai</th>
                     <th>Sisa</th>
-                    <th>Total</th>
+                    <th>Total Jatah</th>
                 </tr>
                 </thead>
 

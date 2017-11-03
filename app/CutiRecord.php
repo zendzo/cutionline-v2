@@ -29,7 +29,7 @@ class CutiRecord extends Model
     public function getSisaAttribute()
     {
     	if ($this->attributes['terpakai'] == 0) {
-    		return 0;
+    		return $this->attributes['total'];
     	}else{
     		return $this->attributes['sisa'] = $this->attributes['total'] - $this->attributes['terpakai'];
     	}

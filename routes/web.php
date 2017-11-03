@@ -63,18 +63,15 @@ Route::group(['prefix' => 'user','as' => 'user.','middleware' => 'auth'],functio
 
 Route::get('/test',function ()
 {
-	$start = Carbon\Carbon::createFromFormat('d-m-Y','06-11-2017');
+	$start = Carbon\Carbon::createFromFormat('d-m-Y','03-11-2017');
 
-	$end = Carbon\Carbon::createFromFormat('d-m-Y','13-11-2017');
+	$end = Carbon\Carbon::createFromFormat('d-m-Y','15-11-2017');
 
 	$diff = $start->copy()->subDay()->diffInDays($end);
 
-	$tanggal = $start->copy();
+	$diffWithoutWeekend = $start->copy()->subDay()->diffInDaysFiltered(function(Carbon\Carbon $date) {
+		return !$date->isWeekend();
+		}, $end);
 
-	foreach (range(1,$diff) as $index) {
-		if ($tanggal->addDay()->isWeekend()) {
-			$tanggal->subDay();
-		}
-	}
-	$cuti_tahunan = $end->subDay()->diffInDays($tanggal);
+	return $diffWithoutWeekend;
 });
