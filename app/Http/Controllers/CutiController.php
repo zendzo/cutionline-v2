@@ -94,33 +94,31 @@ class CutiController extends Controller
 
         $cuti_nikah = $start->copy()->diffInDays($start->copy()->addWeekDays(3));
 
-        $tanggal = $start->copy();
-
         $diffWithoutWeekend = $start->copy()->subDay()->diffInDaysFiltered(function(Carbon $date) {
         return !$date->isWeekend();
-        }, $end);
+        }, $end->addDay());
 
         if (empty($cuti) or empty($cutiRunning)) {
 
             // cuti tahunan as per masa kerja
 
-            if ($input['cuti_type_id'] === "1" && $diffWithoutWeekend >= 12 && $masa_kerja >= 5) {
+            if ($input['cuti_type_id'] === "1" && $masa_kerja <= 5 && $diffWithoutWeekend >= 13) {
                 return redirect()->back()
-                ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
+                ->with('message', 'Cuti Tahunan Melebihi Batas Hari!'.$diffWithoutWeekend." ".$masa_kerja)
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === "1" && $diffWithoutWeekend >= 15 && $masa_kerja <= 10) {
+            if ($input['cuti_type_id'] === "1" && $masa_kerja <= 10 && $diffWithoutWeekend >= 16) {
                 return redirect()->back()
-                ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
+                ->with('message', 'Cuti Tahunan Melebihi Batas Hari!'.$diffWithoutWeekend)
                 ->with('status','error')
                 ->with('type','error');                            
             }
 
-            if ($input['cuti_type_id'] === "1" && $diffWithoutWeekend >= 18 && $masa_kerja <= 10) {
+            if ($input['cuti_type_id'] === "1" && $masa_kerja >= 10 && $diffWithoutWeekend >= 19) {
                 return redirect()->back()
-                ->with('message', 'Cuti Tahunan Melebihi Batas Hari!')
+                ->with('message', 'Cuti Tahunan Melebihi Batas Hari!'.$diffWithoutWeekend)
                 ->with('status','error')
                 ->with('type','error');                            
             }

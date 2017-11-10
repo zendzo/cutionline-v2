@@ -13,8 +13,8 @@
             <img src="{{ asset("AdminLTE/dist/img/user-avatar.png") }}" class="img-circle" alt="User Image" />
             <p>
                 {{ Auth::user()->fullName() }}
-                <small>{{ Auth::user()->role->name }}</small>
-                <small>{{ Auth::user()->updated_at->diffForHumans() }}</small>
+                <small>Type : {{ Auth::user()->role->name }} | Masa Kerja : {{ Auth::user()->masaKerja() }} Th</small>
+                <small>Last Update : {{ Auth::user()->updated_at->diffForHumans() }}</small>
             </p>
         </li>
         <!-- Menu Body -->

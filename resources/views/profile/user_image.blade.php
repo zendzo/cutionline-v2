@@ -5,11 +5,11 @@
 
     <h3 class="profile-username text-center">{{ $user->fullName() }}</h3>
 
-    <p class="text-muted text-center">{{ $user->grade }}</p>
+    <p class="text-muted text-center">Type : {{ $user->role->name }}</p>
 
     <ul class="list-group list-group-unbordered">
       <li class="list-group-item">
-        <b>Grade</b> <a class="pull-right">{{ $user->user_grade_id }}</a>
+        <b>Grade</b> <a class="pull-right">{{ $user->grade->grade }} ({{ $user->grade->grade_level }})</a>
       </li>
       <li class="list-group-item">
         <b>NPP</b> <a class="pull-right">{{ $user->NPP }}</a>

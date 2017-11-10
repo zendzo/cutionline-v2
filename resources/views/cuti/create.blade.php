@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                   <label for="grade">Grade / Posisi </label>
-                  <input type="grade" class="form-control" id="grade" placeholder="Grade" disabled="" value="{{ Auth::user()->grade }}" required="">
+                  <input type="grade" class="form-control" id="grade" placeholder="Grade" disabled="" value="{{ Auth::user()->grade->grade }} ({{ Auth::user()->grade->grade_level }})" required="">
                 </div>
                 <div class="form-group">
                   <label for="NPP">NPP</label>

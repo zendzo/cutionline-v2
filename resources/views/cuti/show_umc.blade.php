@@ -32,7 +32,7 @@
 
           <address>
             <p>Nama             : {{ $data->user->fullName() }}</p>
-            <p>Grade            : {{ $data->user->fullName() }}</p>
+            <p>Grade            : {{ $data->user->grade->grade }} ({{ $data->user->grade->grade_level }})</p>
             <p>Unit Oragnisasi  : </p>
             <p>Mengambil Cuti   : {{ $data->cutiType->type }} </p>
             <p>Selama           : {{ $data->total }} (Hari Kerja)</p>

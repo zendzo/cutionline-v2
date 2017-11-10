@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function grade()
     {
-        return $this->belongsTo(UserGrade::class);
+        return $this->belongsTo(UserGrade::class,'user_grade_id');
     }
 
     public function profile()
