@@ -17,6 +17,15 @@
       <li class="list-group-item">
         <b>Tahun</b> <a class="pull-right">{{ $user->join_year->toFormattedDateString() }}</a>
       </li>
+      <li class="list-group-item">
+        <b>Masa Kerja</b> <a class="pull-right">{{ $user->masaKerja() }} Tahun</a>
+      </li>
+      <li class="list-group-item">
+        <b>Jenis Kelamin</b> <a class="pull-right">{{ $user->gender->gender }}</a>
+      </li>
+      <li class="list-group-item">
+        <b>Status </b> <a class="pull-right">{{ $user->marriedStatus->status }}</a>
+      </li>
     </ul>
 
     <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
