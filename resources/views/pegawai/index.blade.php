@@ -21,6 +21,8 @@
                   <th>Tahun Masuk</th>
                   <th>email</th>
                   <th>phone</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Status Menikah</th>
                   <th>Status</th>
                 </tr>
                 </thead>
@@ -30,28 +32,18 @@
                      <tr>
                         <td><a href="{{ url('/user/profile',$user->id) }}">{{ $user->first_name }}</a></td>
                         <td>{{ $user->last_name }}</td>
-                        <td>{{ $user->grade }}</td>
+                        <td>{{ $user->grade->grade }} ({{ $user->grade->grade_level }})</td>
                         <td>{{ $user->NPP }}</td>
                         <td>{{ $user->join_year->toFormattedDateString() }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone }}</td>
+                        <td>{{ $user->gender->gender }}</td>
+                        <td>{{ $user->marriedStatus->status }}</td>
                         <td><a class="btn btn-primary btn-xs">Aktif</a></td>
                       </tr>
                     @endforeach
                   @endif
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>Nama Depan</th>
-                  <th>Nama Belakang</th>
-                  <th>Grade</th>
-                  <th>NPP</th>
-                  <th>Tahun Masuk</th>
-                  <th>email</th>
-                  <th>phone</th>
-                  <th>Status</th>
-                </tr>
-                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->

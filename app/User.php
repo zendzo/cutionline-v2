@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'user_grade_id', 'NPP', 'join_year', 'name', 'email', 'phone', 'password',
+        'first_name', 'last_name', 'user_grade_id', 'NPP', 'join_year', 'name', 'email', 'phone', 'password','gender_id','married_status_id'
     ];
 
     /**
@@ -91,5 +91,15 @@ class User extends Authenticatable
     public function cutiRecords()
     {
         return $this->hasMany('App\CutiRecord');
+    }
+
+    public function gender()
+    {
+        return $this->belongsTo('App\Gender');
+    }
+
+    public function marriedStatus()
+    {
+        return $this->belongsTo('App\MarriedStatus');
     }
 }

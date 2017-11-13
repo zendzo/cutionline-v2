@@ -124,6 +124,12 @@ class CutiController extends Controller
             }
             // cuti hamil max 3 months start from day taken
             if ($input['cuti_type_id'] === "2") {
+                if (Auth::user()->gender->id == "1") {
+                    return redirect()->back()
+                            ->with('message', "Cuti Melahirkan Hanya Untuk Perempuan")
+                            ->with('status','error')
+                            ->with('type','error');
+                }
                 if ($input['cuti_type_id'] === "2" && $selama > $cuti_hamil) {
                     return redirect()->back()
                             ->with('message', "Cuti Melahirkan Melebihi Batas Syarat $selama!")
@@ -153,6 +159,12 @@ class CutiController extends Controller
             }
 
             if ($input['cuti_type_id'] === "4") {
+                if (Auth::user()->marriedStatus->id == "2") {
+                    return redirect()->back()
+                            ->with('message', "Cuti Menikah Hanya Untuk Pegawai Lajang!")
+                            ->with('status','error')
+                            ->with('type','error');
+                }
                 if ($diffWithoutWeekend > 3) {
                     return redirect()->back()
                             ->with('message', "Cuti Nikah Melebihi Syarat, Anda Mengambil Selama $diffWithoutWeekend Hari!")

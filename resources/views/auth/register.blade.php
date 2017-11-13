@@ -106,6 +106,34 @@
         @endif
       </div>
 
+      <div class="form-group{{ $errors->has('gender_id') ? ' has-error' : '' }}">
+
+          <select class="form-control" name="gender_id" id="gender_id">
+            <option value="1">Laki-Laki</option>  
+            <option value="2">Perempuan</option>
+          </select>
+
+          @if ($errors->has('gender_id'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('gender_id') }}</strong>
+              </span>
+          @endif
+      </div>
+
+      <div class="form-group{{ $errors->has('married_status_id') ? ' has-error' : '' }}">
+
+          <select class="form-control" name="married_status_id" id="married_status_id">
+            <option value="1">Lajang</option>  
+            <option value="2">Menikah</option>
+          </select>
+
+          @if ($errors->has('married_status_id'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('married_status_id') }}</strong>
+              </span>
+          @endif
+      </div>
+
       <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
         <input id="password" name="password" type="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>

@@ -76,6 +76,8 @@ class RegisterController extends Controller
             'join_year' => $data['join_year'],
             'email' => $data['email'],
             'phone' => $data['phone'],
+            'gender_id'=> $data['gender_id'],
+            'married_status_id' =>  $data['married_status_id'],
             'password' => $data['password'],
         ]);
     }
