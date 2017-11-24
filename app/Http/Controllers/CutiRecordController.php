@@ -35,13 +35,19 @@ class CutiRecordController extends Controller
 
     		foreach ($total_cuti as $key => $index) {
     				$key++;
-						CutiRecord::create([
-						'cuti_type_id' => $key,
-						'user_id'	=>	Auth::id(),
-						'masa_berlaku'	=> $awal,
-						'masa_berakhir'	=> $awal->copy()->addMonths(6),
-						'total'	=> $index
-					]);
+                    if (Auth::user()->gender->gender == "Laki-Laki" && $key == 2) {
+                        continue;
+                    }elseif (Auth::user()->marriedStatus->status == "Menikah" && $key == 4) {
+                        continue;
+                    }else{
+                        CutiRecord::create([
+                        'cuti_type_id' => $key,
+                        'user_id'   =>  Auth::id(),
+                        'masa_berlaku'  => $awal,
+                        'masa_berakhir' => $awal->copy()->addMonths(6),
+                        'total' => $index
+                    ]);
+                    }
 	    	}
 
 	    	return redirect()->back()
