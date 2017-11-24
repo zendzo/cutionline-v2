@@ -309,28 +309,29 @@ class CutiController extends Controller
 
     public function cutiApproved($id)
     {
-        // todo kirim sms setelah aksi
 
-        $data = Cuti::find($id);
+        $data = Cuti::find($id)->first();
 
         $data->cuti_status_id = 2;
 
-        $data->save();
-
         if ($data) {
-            
-            // kirim sms pemberitahuan diseteujui
+            try {
+                $data->user->notify(new CutiApprovedSmsNotification($data));
 
-            $data->user->notify(new CutiApprovedSmsNotification($data));
+                $data->save();
 
-            // kirim email pemberitahuan disetejui
+                return redirect()->back()
+                        ->with('message', 'Cuti Telah Disetujui, SMS Pemberitahuan Terkirim!')
+                        ->with('status','success')
+                        ->with('type','success');
 
-            // $data->user->notify(new CutiApproveMailNotification($data));
+            } catch (\Exception $e) {
+                return redirect()->back()
+                        ->with('message', $e->getMessage())
+                        ->with('status','No Connection!')
+                        ->with('type','error');
+            }
         }
-
-            // redirect back
-
-            return redirect()->route('user.cuti.status');
 
     }
 
@@ -342,22 +343,27 @@ class CutiController extends Controller
 
         $data->cuti_status_id = 3;
 
-        $data->save();
-
         if ($data) {
+            try {
 
-            //kirim sms pemberitahuan ditolak
+                $data->user->notify(new CutiRejectedSmsNotification($data));
 
-            $data->user->notify(new CutiRejectedSmsNotification($data));
+                $data->save();
 
-            // kirim email pemberitahuan disetejui
+                return redirect()->back()
+                        ->with('message', 'Cuti Ditolak, SMS Pemberitahuan Terkirim!')
+                        ->with('status','success')
+                        ->with('type','success');
 
-            // $data->user->notify(new CutiRejectMailNotification($data));
+            } catch (\Exception $e) {
+                
+                return redirect()->back()
+                        ->with('message', $e->getMessage())
+                        ->with('status','No Connection!')
+                        ->with('type','error');
+
+            }
         }
-
-            // redirect back
-
-            return redirect()->route('user.cuti.status');
 
     }
 
